@@ -13,9 +13,9 @@ FetchContent_MakeAvailable(Catch2)
 set(source 
   ${CMAKE_CURRENT_SOURCE_DIR}/Source/Exchanger.cpp
   # Внешние тестируемые сущности 
-  ${CMAKE_SOURCE_DIR}/Source/Dollar.cpp
-  ${CMAKE_SOURCE_DIR}/Source/Franc.cpp
   ${CMAKE_SOURCE_DIR}/Source/Money.cpp
+  ${CMAKE_SOURCE_DIR}/Source/Bank.cpp
+  ${CMAKE_SOURCE_DIR}/Source/Sum.cpp
 )
 
 add_executable(Tests ${source})

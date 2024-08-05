@@ -1,31 +1,36 @@
 #include "Money.h"
-
-#include "Dollar.h"
-#include "Franc.h"
+#include "Sum.h"
+#include "Bank.h"
 
 
 namespace Exchanger
 {
 
-    Money::Money(double value, std::string currency)
+    Money::Money(double value, std::string currency) //: Expression()
     {
         _ammount = value;
         _currency = currency;
     }
 
-    bool Money::Equals(std::unique_ptr<Money> value) const
+    Money::Money(const Money &obj)
     {
-        return _ammount == value->_ammount && _currency == value->_currency;
+        _ammount = obj.Ammount();
+        _currency = obj.Currency();
     }
 
-    std::unique_ptr<Money> Money::Dollar(double ammount)
+    bool Money::Equals(std::shared_ptr<Money> value) const
     {
-        return std::unique_ptr<Money>(new Exchanger::Dollar(ammount, "USD"));
+        return _ammount == value->Ammount() && _currency == value->Currency();
     }
 
-   std::unique_ptr<Money> Money::Franc(double ammount)
+    std::shared_ptr<Money> Money::Dollar(double ammount)
     {
-        return std::unique_ptr<Money>(new Exchanger::Franc(ammount, "CHF"));
+        return std::make_shared<Money>(ammount, "USD");
+    }
+
+   std::shared_ptr<Money> Money::Franc(double ammount)
+    {
+        return std::make_shared<Money>(ammount, "CHF");
     }
 
     std::string Money::Currency() const
@@ -33,17 +38,30 @@ namespace Exchanger
         return _currency;
     }
 
-    std::unique_ptr<Money> Money::Times(double multiplier)
+    double Money::Ammount() const
     {
-        if (_currency == "USD")
-            return Money::Dollar(_ammount * multiplier);
-        else
-            return Money::Franc(_ammount * multiplier);
+        return _ammount;
+    }
+
+    std::shared_ptr<Money> Money::Times(double multiplier)
+    {
+        return std::make_shared<Money>(_ammount * multiplier, _currency);
+    }
+
+    std::shared_ptr<Money> Money::Reduce(Bank* bank, std::string to)
+    {
+        int rate = bank->Rate(_currency, to);
+        return std::make_shared<Money>(_ammount/rate, _currency);
     }
 
     std::string Money::ToString() const
     {
         return std::to_string(_ammount) + " " + _currency;
+    }
+
+    std::shared_ptr<Sum> operator+(std::shared_ptr<Money> lhr, std::shared_ptr<Money> rhs)
+    {
+        return std::make_shared<Sum>(lhr, rhs);
     }
 
 }

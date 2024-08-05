@@ -3,36 +3,55 @@
 #include <memory>
 #include <string>
 
+#include "Expression.h"
+
 
 namespace Exchanger
 {
 
-    class Money
+    class Sum;
+    class Bank;
+
+    class Money: public Expression
     {
     public:
+        Money() = default;
         Money(double amount, std::string currency);
+        Money(const Money& obj);
+
         virtual ~Money() = default;
 
         /// @brief Фабричные методы для создания Dollar
         /// @param Численное значение 
         /// @return Новый объект Dollar
-        static std::unique_ptr<Money> Dollar(double ammount);
+        static std::shared_ptr<Money> Dollar(double ammount);
 
         /// @brief Фабричные методы для создания Franc
         /// @param Численное значение 
         /// @return Новый объект Franc
-        static std::unique_ptr<Money> Franc(double ammount);
+        static std::shared_ptr<Money> Franc(double ammount);
 
-        bool Equals(std::unique_ptr<Money> value) const;
+        /// @brief 
+        /// @param value 
+        /// @return 
+        bool Equals(std::shared_ptr<Money> value) const;
+
+        /// @brief 
+        /// @return 
         std::string Currency() const;
-        std::unique_ptr<Money> Times(double multiplier);
+
+        double Ammount() const;
+        std::shared_ptr<Money> Times(double multiplier);
+
+        std::shared_ptr<Money> Reduce(Bank* bank, std::string to);
 
         std::string ToString() const;
 
-    protected:       
+    private:       
        double _ammount;
        std::string _currency;
-
     };
 
+
+    std::shared_ptr<Sum> operator+ (std::shared_ptr<Money> lhr, std::shared_ptr<Money> rhs); 
 }
