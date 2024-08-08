@@ -1,7 +1,6 @@
 #pragma once
 
-#include <memory>
-#include <string>
+#include "Precompile.h"
 
 #include "Expression.h"
 
@@ -12,14 +11,14 @@ namespace Exchanger
     class Sum;
     class Bank;
 
+    /// @brief Класс реализующий валюту
     class Money: public Expression
     {
     public:
-        Money() = default;
-        Money(double amount, std::string currency);
-        Money(const Money& obj);
-
-        virtual ~Money() = default;
+        /// @brief Конструктор
+        /// @param amount Значение валюты 
+        /// @param currency Наименование валюты
+        explicit Money(double amount, std::string currency);
 
         /// @brief Фабричные методы для создания Dollar
         /// @param Численное значение 
@@ -31,27 +30,53 @@ namespace Exchanger
         /// @return Новый объект Franc
         static std::shared_ptr<Money> Franc(double ammount);
 
-        /// @brief 
-        /// @param value 
-        /// @return 
-        bool Equals(std::shared_ptr<Money> value) const;
+        /// @brief Получить наименвание валюты
+        /// @return Имя валюты
+        [[nodiscard]] inline std::string GetCurrency() const
+        {
+            return _currency;
+        };
 
-        /// @brief 
-        /// @return 
-        std::string Currency() const;
+        /// @brief Получить численное значение валюты
+        /// @return Значение
+        [[nodiscard]] inline double GetAmmount() const
+        {
+            return _ammount;
+        };
 
-        double Ammount() const;
-        std::shared_ptr<Money> Times(double multiplier);
+        /// @brief Преобразование валюты
+        /// @param source Исходное значение валюты
+        /// @param to Треубемый тип валюты
+        /// @return Новое преобразованное значение валюты
+        std::shared_ptr<Money> Reduce(Bank* bank, std::string to) const override;
 
-        std::shared_ptr<Money> Reduce(Bank* bank, std::string to);
+        /// @brief Операция сложения
+        /// @param addend Слагаемое
+        /// @return Новое значение валюты
+        std::shared_ptr<Expression> Plus(std::shared_ptr<Expression> addend) const override;
 
-        std::string ToString() const;
+        /// @brief Операция сложения
+        /// @param addend Слагаемое
+        /// @return Новое значение валюты
+        std::shared_ptr<Expression> Plus(std::shared_ptr<Money> addend) const;
 
-    private:       
-       double _ammount;
-       std::string _currency;
+        /// @brief Операция умножения
+        /// @param multiplier Множитель
+        /// @return Новое значение валюты
+        std::shared_ptr<Expression> Times(double multiplier) const override;
+
+        /// @brief Вывод числа в виде строки
+        /// @return Валюта в формате строке
+        [[nodiscard]] std::string ToString() const;
+
+    private:
+        std::string _currency;
+        double _ammount;
     };
 
+    bool operator==(std::shared_ptr<Expression> lhs, std::shared_ptr<Expression> rhs);
+    bool operator==(std::shared_ptr<Money> lhs, std::shared_ptr<Money> rhs);
+    bool operator==(std::shared_ptr<Expression> lhs, std::shared_ptr<Money> rhs);
+    bool operator==(std::shared_ptr<Money> lhs, std::shared_ptr<Expression> rhs);
 
-    std::shared_ptr<Sum> operator+ (std::shared_ptr<Money> lhr, std::shared_ptr<Money> rhs); 
 }

@@ -16,14 +16,16 @@ namespace Exchanger
 
     double Bank::Rate(std::string from, std::string to)
     {
+        if (from == to ) return 1;
+        
         try
         {
             return _hashtable.at(currencys(from, to));
         }
         catch(const std::exception& e)
         {
-            return 1;
+            throw;
         }
-         
+                
     }
 }

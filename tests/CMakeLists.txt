@@ -16,6 +16,7 @@ set(source
   ${CMAKE_SOURCE_DIR}/Source/Money.cpp
   ${CMAKE_SOURCE_DIR}/Source/Bank.cpp
   ${CMAKE_SOURCE_DIR}/Source/Sum.cpp
+  ${CMAKE_SOURCE_DIR}/Source/CurrencysHash.cpp
 )
 
 add_executable(Tests ${source})
