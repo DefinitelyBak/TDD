@@ -1,18 +1,17 @@
 cmake_minimum_required(VERSION 3.15)
 project(TDD VERSION 1.0.0 LANGUAGES CXX)
 
-enable_testing()
+Include(FetchContent)
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/tests)
-
-set(source
-    ${CMAKE_SOURCE_DIR}/Source/main.cpp
-    ${CMAKE_SOURCE_DIR}/Source/Money.cpp
-    ${CMAKE_SOURCE_DIR}/Source/Bank.cpp
-    ${CMAKE_SOURCE_DIR}/Source/Sum.cpp
-    ${CMAKE_SOURCE_DIR}/Source/CurrencysHash.cpp
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v3.4.0
 )
 
-add_executable(TDD ${source})
+FetchContent_MakeAvailable(Catch2)
 
-target_include_directories(TDD PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Include)
+enable_testing()
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/WyCash)
+add_subdirectory(${CMAKE_SOURCE_DIR}/xUnit)

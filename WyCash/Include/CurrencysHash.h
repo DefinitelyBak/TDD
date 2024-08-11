@@ -8,7 +8,7 @@ namespace Exchanger
     /// @brief Тип пары валюты
     using currencys = std::pair<std::string, std::string>;
 
-    /// @brief Функтр для расчёта хэша
+    /// @brief Функтор для расчёта хэша
     struct currencysHash
     {
         /// @brief Расчёт кэша
