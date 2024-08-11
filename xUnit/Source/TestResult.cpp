@@ -3,10 +3,11 @@
 
 namespace xUnit
 {
+    
     TestResult::TestResult(): _runCount(0), _errorCount(0)
     {}
 
-    std::string TestResult::Summary()
+    std::string TestResult::Summary() const
     {
         return std::to_string(_runCount) + " run, " + std::to_string(_errorCount)+ " failed" + _errorLog;
     }

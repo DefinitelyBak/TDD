@@ -3,6 +3,8 @@
 
 namespace xUnit
 {
+    TestCaseTest::TestCaseTest(fuctionType func, std::string nameFunction): TestCase<void()>(std::bind(func, this), nameFunction)
+    {}
 
     void TestCaseTest::SetUp()
     {

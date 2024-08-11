@@ -5,7 +5,6 @@ set(source
   ${CMAKE_CURRENT_SOURCE_DIR}/Source/TestCaseTest.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Source/TestFunctions.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/../Source/TestResult.cpp
-  # Внешние тестируемые сущности
 )
 
 add_executable(xUnit_test ${source})

@@ -3,6 +3,8 @@
 #include "TestSuite.h"
 
 
+using namespace xUnit;
+
 int FunctionDone()
 {
     return 55;
@@ -14,8 +16,6 @@ int FunctionError()
     return -1;
 };
 
-
-using namespace xUnit;
 
 int main()
 {

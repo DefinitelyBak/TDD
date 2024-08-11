@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.15)
 
+Include(FetchContent)
+
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v3.4.0
+)
+
+FetchContent_MakeAvailable(Catch2)
+
 set(source 
   ${CMAKE_CURRENT_SOURCE_DIR}/Source/Exchanger.cpp
   # Внешние тестируемые сущности 

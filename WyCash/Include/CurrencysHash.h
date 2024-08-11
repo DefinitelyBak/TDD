@@ -5,6 +5,7 @@
 
 namespace Exchanger
 {
+    
     /// @brief Тип пары валюты
     using currencys = std::pair<std::string, std::string>;
 

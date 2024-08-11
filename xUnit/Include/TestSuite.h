@@ -8,17 +8,23 @@
 namespace xUnit
 {
 
-    template<class T>
-    class TestSuite
+    /// @brief Класс контейнер тестов
+    /// @tparam T Тип тестируемых функций
+    template<class T> class TestSuite
     {
     public:
+        /// @brief Конструктор
         TestSuite() = default;
 
+        /// @brief Добавить тест
+        /// @param test Тест
         void Add(WasRun<T>&& test)
         {
             _tests.emplace_back(std::forward<WasRun<T>>(test));
         }
 
+        /// @brief Запустить тесты
+        /// @param result Возвращаемый результат
         void Run(TestResult& result)
         {
             for (auto& x: _tests)

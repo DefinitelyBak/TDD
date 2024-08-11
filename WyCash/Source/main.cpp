@@ -19,7 +19,4 @@ int main()
 
     std::cout << "USD: " << resCash->ToString() << std::endl;
     std::cout << "RUB: " << bank.Reduce(resCash, "RUB")->ToString() <<  std::endl << std::endl;
-
-
-    std::cout << "Hello, TDD!" << std::endl;
 }

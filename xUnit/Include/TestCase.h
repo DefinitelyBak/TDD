@@ -7,17 +7,26 @@
 
 namespace xUnit
 {
-    template<class T>
-    class TestCase
+
+    /// @brief Класс запускаемых тестов
+    /// @tparam T Тип тестируемой функции
+    template<class T> class TestCase
     {
     public:
+        /// @brief Используемый тип функции
         using fuctionType = std::function<T>;
 
+        /// @brief Дефолдный конструктор
         TestCase() = default;
-        TestCase(fuctionType funct, std::string nameFunction):
-            _funct(funct), _nameFunction(nameFunction)
+
+        /// @brief Конструктор
+        /// @param funct Тестируемая функция 
+        /// @param nameFunction Название тестируемой функции
+        TestCase(fuctionType funct, std::string nameFunction): _funct(funct), _nameFunction(nameFunction)
         {}
 
+        /// @brief Запуск теста
+        /// @param result Объект компоновщик
         void Run(TestResult& result)
         {
             result.TestStarted();
@@ -39,15 +48,19 @@ namespace xUnit
         }
 
     protected:
-        std::string GetNameFunction()
+        /// @brief Вернуть название тестируемой функции
+        /// @return Название функции
+        std::string GetNameFunction() const
         {
             return _nameFunction;
         }
 
     private:
+        /// @brief Подготовка функции
+        virtual void SetUp(){};
 
-        virtual void SetUp() = 0;
-        virtual void TearDown() = 0;
+        /// @brief Функция очистки
+        virtual void TearDown(){};
 
         fuctionType _funct;
         std::string _nameFunction;
