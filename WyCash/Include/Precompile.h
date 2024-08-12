@@ -6,3 +6,4 @@
 #include <functional>
 #include <utility>
 #include <string>
+#include <algorithm>
